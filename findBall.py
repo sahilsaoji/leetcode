@@ -5,33 +5,24 @@ def findBall(self, grid):
         #ways to get down -> check for the line next to it on the left if the value -1 -> if that is 1 then set that value to -1 
         
         #if it does all this and it reaches len[grid] then return the column number
-        flag = True
-        n=len(grid[0]) # no of cols
-        m=len(grid) # no of rows
-        res=[-1 for _ in range(n)] 
-
-        for a in range(n):
-                i=a
-                f=True   
-                for j in range(m):
-                        if grid[j][i]==1:
-                                if i+1>=n: 
-                                        flag=False
-                                        break
-                                if i+1<n and grid[j][i+1]==-1: 
-                                        flag=False
-                                        break
-                                i+=1
-                        else:
-                                if i-1<0:
-                                        flag=False
-                                        break
-                                if i-1>=0 and grid[j][i-1]==1: 
-                                        flag=False
-                                        break
-                                i-=1
-                if flag: 
-                        res[a]=i
-                else : res[a]=-1
+        m = len(grid)
+        n = len(grid[0])
+        res = [-1] * n
+        for col in range(n):
+            i = col
+            row = 0
+            # the ball falling process simulation
+            while row < m:
+                val = grid[row][col]
+                col += val
+                # the ball gets stuck at the left or at the right border
+                if not 0 <= col < n:
+                    break
+                # the ball gets stuck at a "V" shaped pattern
+                if grid[row][col] != val:
+                    break
+                # the ball falls to the next row
+                row += 1
+            if row == m: res[i] = col
         return res
     
