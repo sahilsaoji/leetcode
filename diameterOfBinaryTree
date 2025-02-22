@@ -1,0 +1,54 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution(object):
+    def diameterOfBinaryTree(self, root):
+        """
+        Calculates the diameter of a binary tree.
+        
+        The diameter of a binary tree is the length of the longest path between any two nodes.
+        This path does not necessarily pass through the root.
+        
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
+        # Initialize the diameter. This variable will keep track of the maximum path length
+        # found during the traversal of the tree.
+        self.diameter = 0
+
+        def depth(node):
+            """
+            Computes the depth (or height) of the subtree rooted at 'node' and updates the diameter.
+            
+            The depth is defined as the number of nodes along the longest path from the node 
+            down to the farthest leaf node.
+            
+            :param node: The current TreeNode being processed.
+            :return: The depth of the subtree rooted at 'node'.
+            """
+            # Base case: if the current node is None, then it contributes a depth of 0.
+            if not node:
+                return 0
+
+            # Recursively calculate the depth of the left subtree.
+            left = depth(node.left)
+            # Recursively calculate the depth of the right subtree.
+            right = depth(node.right)
+
+            # The "path" through the current node is the sum of the depths of its left and right subtrees.
+            # This path represents the longest path that goes through the current node.
+            # Update the global diameter if this path is longer than the current maximum.
+            self.diameter = max(self.diameter, left + right)
+
+            # Return the depth of the tree rooted at this node.
+            # We add 1 to include the current node in the depth count.
+            return 1 + max(left, right)
+        
+        # Start the recursion from the root node.
+        depth(root)
+        # Return the computed diameter, which is the longest path found.
+        return self.diameter
