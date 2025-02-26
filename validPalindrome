@@ -1,0 +1,23 @@
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        clean_s = ''.join(char for char in s if char.isalnum())
+        clean_s = clean_s.lower()
+
+        start = 0
+        end = len(clean_s)-1
+
+        while start <= end:
+            if clean_s[start] != clean_s[end]:
+                return False
+            start += 1
+            end -= 1
+        return True
+        
+
+
+        print(clean_s)
+        
