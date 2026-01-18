@@ -1,0 +1,20 @@
+class Solution(object):
+    def findDuplicate(self, paths):
+        """
+        :type paths: List[str]
+        :rtype: List[List[str]]
+        """
+        #the least optimal way to look through would be O(n2) where for every value, you search for a duplicate
+        seen = defaultdict(list)
+        duplicates = set()
+        for item in paths:
+            parts = item.split()
+            directory = parts[0]
+            for file in parts[1:]:
+                content = re.findall(r'\(([^)]+)\)', file)[0]
+                filename = file.split('(')[0]
+                full_path = directory + "/" + filename
+                seen[content].append(full_path)
+        return [files for files in seen.values() if len(files) > 1]
+        
+        

@@ -1,0 +1,54 @@
+class Solution(object):
+    def shortestPathBinaryMatrix(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        #breath first search
+        #Find all adjacement values from the current pointer
+        #start a path from that value to an adjacement value that works
+        #Compare all the different paths and return the least
+        from collections import deque
+
+class Solution(object):
+    def shortestPathBinaryMatrix(self, grid):
+        n = len(grid)
+
+        # Edge cases
+        if grid[0][0] == 1 or grid[n-1][n-1] == 1:
+            return -1
+
+        # 8 possible directions
+        directions = [
+            (-1, -1), (-1, 0), (-1, 1),
+            (0, -1),           (0, 1),
+            (1, -1),  (1, 0),  (1, 1)
+        ]
+
+        # BFS queue: (row, col, path_length)
+        queue = deque([(0, 0, 1)])
+        visited = set([(0, 0)])
+
+        while queue:
+            r, c, dist = queue.popleft()
+
+            # Reached destination
+            if r == n - 1 and c == n - 1:
+                return dist
+
+            # Explore neighbors
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+
+                if (
+                    0 <= nr < n and
+                    0 <= nc < n and
+                    grid[nr][nc] == 0 and
+                    (nr, nc) not in visited
+                ):
+                    visited.add((nr, nc))
+                    queue.append((nr, nc, dist + 1))
+
+        return -1
+
+        

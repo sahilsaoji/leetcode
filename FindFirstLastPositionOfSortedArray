@@ -1,0 +1,20 @@
+class Solution(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        returnList = []
+        for item in range(0,len(nums)):
+            if nums[item] == target:
+                returnList.append(item)
+        if len(returnList) == 0:
+            return [-1,-1]
+        elif len(returnList) == 1:
+            return [returnList[0],returnList[0]]
+        elif len(returnList) > 2:
+            return [returnList[0], returnList[len(returnList)-1]]
+        else:
+            return returnList
+        

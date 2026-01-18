@@ -1,0 +1,35 @@
+class Solution(object):
+    def wordsAbbreviation(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        result = [""] * len(words)
+        prefix_lens = [1] * len(words)
+
+        def make_abbr(word, pre_len):
+            if len(word) - pre_len - 1 <= 1:
+                return word
+            return word[:pre_len] + str(len(word)-pre_len -1) + word[-1]
+
+        while True: 
+            abbr_dict = {}
+
+            for i, word in enumerate(words):
+                abbr = make_abbr(word, prefix_lens[i])
+                result[i] = abbr
+                if abbr not in abbr_dict:
+                    abbr_dict[abbr] = []
+                abbr_dict[abbr].append(i)
+
+            conflict = False
+            for indices in abbr_dict.values():
+                if len(indices) > 1:
+                    conflict = True
+                    for idx in indices:
+                        prefix_lens[idx] += 1
+            
+            if not conflict:
+                break
+
+        return result
